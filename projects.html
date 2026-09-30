@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Two Projects — Automated TikToks &amp; FaceLook Hero Mode</title>
+<style>
+  :root {
+    --ink: #1d1d1f;
+    --muted: #6e6e73;
+    --subtle: #86868b;
+    --line: #d2d2d7;
+    --bg: #ffffff;
+    --panel: #f5f5f7;
+    --panel-hover: #ebebf0;
+    --accent: #0071e3;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Navigation */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--ink); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--muted); font-size: 14px; transition: color 0.15s ease; }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* Layout */
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero { text-align: center; padding: 110px 24px 84px; }
+  .hero h1 {
+    font-size: 56px;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+  .hero p {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 70px 20px 50px; }
+    .hero h1 { font-size: 38px; }
+    .hero p { font-size: 19px; }
+  }
+
+  /* Sections */
+  section { padding: 80px 0; border-top: 1px solid var(--line); }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+  section h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  section .lede {
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--muted);
+    margin: 0 0 44px;
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 640px) {
+    section { padding: 56px 0; }
+    section h2 { font-size: 30px; }
+    section .lede { font-size: 18px; margin-bottom: 32px; }
+  }
+
+  h3 {
+    font-size: 24px;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    margin: 48px 0 14px;
+    color: var(--ink);
+  }
+  h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 8px;
+    color: var(--ink);
+  }
+  p { margin: 0 0 18px; }
+
+  ul { margin: 0 0 20px; padding-left: 22px; }
+  li { margin: 0 0 8px; }
+
+  .muted { color: var(--muted); }
+
+  /* Numbered Steps */
+  ol.steps { list-style: none; counter-reset: step; margin: 0 0 20px; padding: 0; }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 18px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--panel);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Stage cards */
+  .stage-box {
+    background: var(--panel);
+    border-radius: 18px;
+    padding: 26px 28px 16px;
+    margin: 0 0 20px;
+  }
+  .stage-box .stage-meta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 4px;
+  }
+  .stage-box h4 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .stage-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  /* Comparison grid */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  @media (max-width: 640px) { .spec-grid { grid-template-columns: 1fr; } }
+  .spec-card {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .spec-card h5 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .spec-card p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Summary Table */
+  table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 15px; }
+  th, td { text-align: left; padding: 12px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; width: 32%; }
+
+  /* Callout */
+  .callout {
+    border-radius: 16px;
+    padding: 22px 26px;
+    margin: 32px 0;
+    background: #fbfbfd;
+    border: 1px solid var(--line);
+  }
+  .callout h4 { margin: 0 0 8px; font-size: 17px; }
+  .callout p { margin: 0; font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+  /* Flow Diagram */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 36px;
+  }
+  .flow .node {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .flow .arrow { color: var(--subtle); font-size: 14px; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 24px 72px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">Projects Overview</span>
+    <div class="nav-links">
+      <a href="#tiktok">Automated TikTok Generator</a>
+      <a href="#facelook">FaceLook Hero Bot</a>
+      <a href="#disclosure">Security Finding</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Two Systems Built from Scratch</h1>
+    <p>A fully automated, local video generation pipeline with an iterative learning loop — alongside an analytical browser bot designed to solve a school memory game and inspect its data security.</p>
+  </div>
+</header>
+
+<!-- ==================== PROJECT 1 ==================== -->
+<section id="tiktok">
+  <div class="wrap">
+    <p class="eyebrow">Project One</p>
+    <h2>Automated Faceless TikTok Generator</h2>
+    <p class="lede">A Python program running entirely on a local machine that writes, voices, times, and edits short videos, then measures their audience retention to improve future stories.</p>
+
+    <p>Short-form vertical video platforms like TikTok feature a popular genre: "faceless storytime" videos. These typically pair a gripping, strange, or absurd first-person narrative with synthetic speech, bold animated word-by-word subtitles, and mesmerizing background gameplay footage. Producing these videos manually is labor-intensive: coming up with ideas, editing the text, recording audio, synchronizing subtitles word by word, cutting footage, and reviewing analytics to figure out why viewers lost interest.</p>
+
+    <p>This project automates that entire lifecycle into a single pipeline. Crucially, the entire stack runs <strong>locally on my Apple Mac</strong> without recurring cloud API fees, using open-weight models for text generation, speech synthesis, and audio alignment.</p>
+
+    <h3>The End-to-End Pipeline</h3>
+    <p>A single CLI command triggers an automated six-stage workflow that takes an idea from zero to a ready-to-post 1080&times;1920 video:</p>
+
+    <div class="flow">
+      <span class="node">1. Pick Strategy</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">2. Pitch &amp; Write</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">3. Voice Synthesis</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">4. Word Alignment</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">5. Video Assembly</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">6. Learnings Loop</span>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 1 &middot; Strategy &amp; Exploration</p>
+      <h4>Hypothesis Selection</h4>
+      <p>Before generating anything, the program selects a testing profile: one category (such as <em>unhinged neighbor</em>, <em>absurd petty revenge</em>, or <em>bizarre workplace chaos</em>), one hook format (such as a direct provocative question, a shocking factual statement, an intriguing opening like "I never told anyone...", or a chaotic mid-action start), and one synthetic voice profile. These variables are recorded into structured metadata for every video, allowing statistical comparison across hundreds of posts.</p>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 2 &middot; Multi-Pass Story Generation</p>
+      <h4>Idea Pitching, Selection, and Script Polish</h4>
+      <p>Instead of relying on a single prompt, the local large language model (Qwen 27B running locally via LM Studio) operates across multiple distinct passes:</p>
+      <ul>
+        <li><strong>Pitching 5 ideas:</strong> The model generates five radically different story concepts, each with a clear premise, an opening hook under 15 words, and a concluding twist.</li>
+        <li><strong>Editorial evaluation:</strong> Running in an "editorial" role, the model evaluates all five ideas against strict retention criteria (Is the hook irresistible? Is the premise absurd yet delivered deadpan? Can it escalate naturally for 80 seconds?) and selects the single strongest pitch.</li>
+        <li><strong>Full script creation:</strong> The selected idea is written into a complete 330–400 word script designed for an exact speaking duration between 75 and 85 seconds.</li>
+        <li><strong>Revision &amp; Tightening:</strong> A separate revision prompt cuts unnecessary middle segments, accelerates the escalation, and sharpens the final twist to encourage comments and debate.</li>
+      </ul>
+      <p>Every story prompt dynamically injects all accumulated rules from <code>Learnings.md</code> as well as all previously used titles, preventing repetition and actively reinforcing what worked in past videos.</p>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 3 &middot; High-Fidelity Voice Synthesis</p>
+      <h4>Neural Speech Generation</h4>
+      <p>The script is rendered using Kokoro, a lightweight local neural text-to-speech engine. The synthesized audio is saved as uncompressed WAV. Because TikTok watch-time algorithms heavily reward content over 60 seconds that maintains high completion rates, the system verifies the exact duration: if the synthesized speech falls below the minimum target duration, the script is dynamically expanded with additional narrative escalations and re-synthesized until it hits the target window.</p>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 4 &middot; Speech Recognition &amp; Forced Alignment</p>
+      <h4>Millisecond Word-Level Timestamps</h4>
+      <p>To display high-energy, animated on-screen captions, every single word needs an exact start and end timestamp. The program runs faster-whisper locally over the synthesized voice file. Because raw speech recognition can mishear words or alter punctuation, the system runs a sequence-matching alignment algorithm (using diff opcode matching) that locks Whisper's detected timestamps onto the original, perfectly spelled script text.</p>
+      <p>The aligned words are compiled into an Advanced SubStation Alpha (<code>.ass</code>) subtitle track. Words are grouped into brief 1-to-3 word display chunks, rendered in prominent bold typography with heavy dark outlines, an energetic scale-pop animation on appearance, and vivid color highlighting on the exact active word currently being spoken.</p>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 5 &middot; Video Assembly &amp; Rendering</p>
+      <h4>FFmpeg Compositing</h4>
+      <p>Video rendering is executed through an automated FFmpeg pipeline:</p>
+      <ul>
+        <li>It inspects a high-resolution, long-duration gameplay recording (such as Minecraft parkour) and chooses a random starting point long enough to cover the audio plus a brief breathing tail.</li>
+        <li>It crops the 16:9 gameplay to a 9:16 aspect ratio (1080&times;1920), scales with a Lanczos filter, applies a subtle unsharp mask for crisp mobile viewing, and burns in the styled ASS subtitles.</li>
+        <li>The vocal track is mixed and encoded using AAC audio, while the video is encoded using hardware or software H.264 with high-profile fast-start flags for immediate playback on mobile devices.</li>
+      </ul>
+    </div>
+
+    <div class="stage-box">
+      <p class="stage-meta">Stage 6 &middot; Feedback Loop &amp; Autonomous Learning</p>
+      <h4>Retention Analysis and Continuous Improvement</h4>
+      <p>Once a video is published, actual viewer metrics (total views, average watch time, full completion rate, and the exact drop-off second from the retention curve) are recorded back into an Obsidian vault markdown note.</p>
+      <p>When running the analysis engine, the language model reads the video's script, word timestamps, and channel averages. By mapping the drop-off second to the exact sentence spoken at that moment, the AI diagnoses precisely why audience retention dipped (for example: a pause that was too long, an escalation that lost plausibility, or a confusing transition). It synthesizes these findings across all posted videos into a living rulebook: rules supported by multiple videos become permanent editorial guidelines, while single-video patterns remain tentative until verified over 10+ posts.</p>
+    </div>
+
+    <h3>Local Architecture &amp; Privacy</h3>
+    <table>
+      <tr><th>Language &amp; Environment</th><td>Python 3.12, running entirely locally on macOS</td></tr>
+      <tr><th>Text Generation</th><td>Qwen 27B running locally in LM Studio via local OpenAI-compatible API</td></tr>
+      <tr><th>Voice Synthesis</th><td>Kokoro neural TTS running locally on CPU/Metal</td></tr>
+      <tr><th>Audio Alignment</th><td>faster-whisper (int8) with sequence alignment for zero spelling errors</td></tr>
+      <tr><th>Video Processing</th><td>FFmpeg with custom ASS subtitle styling, Lanczos scaling, and H.264 encoding</td></tr>
+      <tr><th>Knowledge Storage</th><td>Plain Markdown files in an Obsidian vault with frontmatter metadata</td></tr>
+      <tr><th>User Interface</th><td>Built-in local Flask dashboard for inspecting videos, jobs, and retention graphs</td></tr>
+    </table>
+
+    <div class="callout">
+      <h4>Platform Integrity &amp; Responsible Automation</h4>
+      <p>Every generated video automatically includes TikTok's official AI-generated content label. Metrics are ingested cleanly rather than scraped via fragile web bots that breach platform terms, maintaining high reliability and full compliance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROJECT 2 ==================== -->
+<section id="facelook">
+  <div class="wrap">
+    <p class="eyebrow">Project Two</p>
+    <h2>FaceLook Hero Mode: How I Reached the Leaderboard</h2>
+    <p class="lede">A lightweight browser-based automation script that solved an educational face-recognition game with near-perfect accuracy and sub-millisecond reaction speeds.</p>
+
+    <h3>1. The Premise of the Game</h3>
+    <p>FaceLook is a school web application designed to help students and faculty learn each other's names and faces. In <strong>Hero Mode</strong>, players face an endurance test of hundreds of consecutive questions under time and health constraints:</p>
+    <ul>
+      <li><strong>Name Round:</strong> The game displays a target person's name and four face photographs. The player must select the matching photo.</li>
+      <li><strong>Face Round:</strong> The game shows one large photograph and four candidate names. The player must select the correct name.</li>
+      <li><strong>Health &amp; Streaks:</strong> Correct answers increase the streak multiplier and restore health; incorrect answers or hesitation deplete health until game over. Top leaderboard placement requires high streaks across hundreds of questions without missing.</li>
+    </ul>
+
+    <h3>2. The Underlying Architectural Vulnerability</h3>
+    <p>During manual play, inspecting the page source and network traffic revealed a critical design shortcut: <strong>every face image file on the server was named directly after the person pictured</strong> (for example, <code>First_Last_ClassYear_RandomHash.png</code>).</p>
+    <p>Because the image URL itself held the plaintext answer, solving the round did not require complex facial recognition or computer vision models. It was fundamentally an algorithmic text-matching challenge between the on-screen prompt and the image filename attributes already present in the DOM.</p>
+
+    <h3>3. How the Bot Worked in Practice</h3>
+    <p>The bot was designed as a lightweight console script pasted directly into the browser's developer tools on the active game page. Its internal architecture solved three key challenges:</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h5>DOM Mutation Monitoring</h5>
+        <p>Rather than relying on blind polling or fixed interval timers, the bot configured a <code>MutationObserver</code> paired with <code>requestAnimationFrame</code>. It continuously monitored changes to image sources, button classes, and text elements, reacting the very millisecond a new question rendered.</p>
+      </div>
+      <div class="spec-card">
+        <h5>Delay Collapsing ("Turbo Mode")</h5>
+        <p>The game normally enforced an artificial ~300ms pause between questions. The bot monkey-patched <code>window.setTimeout</code>, detecting transitions between 200ms and 500ms and immediately executing them at 0ms. This made questions appear continuously without waiting.</p>
+      </div>
+      <div class="spec-card">
+        <h5>Exact Name Normalization</h5>
+        <p>To prevent false positives (such as "Ben" incorrectly matching "Benjamin"), strings were stripped of accents, diacritics, punctuation, and honorifics (Mr., Ms., Dr.), and compared using strict multi-token key sets.</p>
+      </div>
+      <div class="spec-card">
+        <h5>Handling Real-World Exceptions</h5>
+        <p>The bot maintained an override dictionary for school-specific nicknames (where a student's file name said "John" but the game displayed "Peter"), accounted for faculty staff titles, and handled special pet rounds.</p>
+      </div>
+    </div>
+
+    <h3>4. Overcoming High-Speed Race Conditions</h3>
+    <p>Under turbo speed, a subtle race condition emerged: the game's client-side framework frequently updated the text prompt one frame before updating the four image source URLs. If the bot clicked instantly on text change, it would occasionally click based on an outdated image from the previous question, breaking the streak.</p>
+    <p>To resolve this, a <strong>frame-stabilization gate</strong> was implemented: the script generated a unique signature combining the current prompt and all option image URLs, requiring this signature to remain completely stable across two consecutive animation frames before authorizing a click. This eliminated race condition errors completely while retaining maximum game speed.</p>
+
+    <h3>5. Leaderboard Submission</h3>
+    <p>The automation strictly restricted its operation to answering the in-game questions. Once the endurance run concluded, the game presented its standard score submission screen. The player entered their display name manually and submitted the legitimate high score to the public leaderboard.</p>
+  </div>
+</section>
+
+<!-- ==================== PROJECT 3 ==================== -->
+<section id="disclosure">
+  <div class="wrap">
+    <p class="eyebrow">Responsible Disclosure</p>
+    <h2>Security Finding: Unauthenticated Photo Directory</h2>
+    <p class="lede">While building the automation, an inspection of the client application revealed that the entire database of student and teacher photographs was completely accessible to anyone on the internet without a password.</p>
+
+    <h3>The Discovery</h3>
+    <p>In web applications handling sensitive internal directory data, access to personal photographs and rosters should require active student or faculty authentication. While examining the asset loading sequence for FaceLook, I discovered that the frontend loaded an unauthenticated JavaScript utility file containing an index of all asset categories, class rosters, and relative image paths.</p>
+    <p>Using these paths, any external user could query the file server directly and download high-resolution photographs of every single enrolled student and faculty member, complete with their first name, last name, graduation year, and assigned status — without entering any credentials, session tokens, or school passwords.</p>
+
+    <h3>Verification via Batch Ingestion</h3>
+    <p>To understand the scope of the exposure, a verification script was developed. The script performed the following steps:</p>
+    <ol class="steps">
+      <li><strong>Manifest Extraction:</strong> Fetched the public JavaScript manifest file and parsed all referenced image file paths using regular expressions.</li>
+      <li><strong>Concurrent Download:</strong> Initialized a multi-threaded request pool to test whether individual asset URLs enforced any authentication, CORS boundaries, or IP-based rate limiting.</li>
+      <li><strong>Storage &amp; Audit:</strong> Verified that hundreds of megabytes of personal identity photos could be harvested directly across all grades, faculty departments, and school years.</li>
+    </ol>
+
+    <div class="callout">
+      <h4>Ethical Responsibility &amp; Resolution</h4>
+      <p>Building a high-score game bot is a harmless exploration of frontend logic. However, discovering that an entire school directory's biometric and identity photographs are exposed without authentication is a serious privacy and safety concern. Rather than sharing or misusing the collected data, the entire vulnerability — including the mechanism of the exposure and remediation steps — was documented responsibly so the school administration could secure the image storage behind proper role-based authentication.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Projects documentation prepared for review. Both systems represent explorations of software automation, web reverse-engineering, and ethical security analysis.</p>
+  </div>
+</footer>
+
+</body>
+</html>
