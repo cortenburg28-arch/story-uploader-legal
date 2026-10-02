@@ -337,19 +337,24 @@
   .beat.video { color: var(--accent); }
   .video-scrub { height: 300vh; }
   #make-video .scrub-pin {
-    grid-template-columns: minmax(220px, 1fr) auto;
+    grid-template-columns: minmax(240px, 38vw) auto;
+    justify-content: center;
     align-items: center;
+    gap: clamp(28px, 4vw, 56px);
   }
-  .phone-wrap { display: grid; justify-items: center; }
-  .film-steps { margin-top: 22px; width: 100%; }
+  #vid-title { font-size: clamp(34px, 4.6vh, 52px); }
+  #vid-copy { font-size: clamp(16px, 2.15vh, 21px); line-height: 1.45; max-width: 32ch; }
+  .phone-wrap { display: flex; justify-content: center; }
+  .film-steps { margin-top: 22px; width: min(100%, 32ch); }
   .phone {
     position: relative;
+    height: min(740px, calc(100vh - 96px));
     width: auto;
-    height: min(760px, calc(100vh - 88px));
-    aspect-ratio: 9 / 16;
+    aspect-ratio: 393 / 852;
+    flex: 0 0 auto;
     background: #0b0b0d;
-    border-radius: 48px;
-    padding: 8px;
+    border-radius: 18%;
+    padding: 2.2%;
     box-shadow:
       0 28px 70px rgba(0,0,0,0.18),
       inset 0 0 0 1px #3a3a3c;
@@ -363,32 +368,33 @@
     background: #2c2c2e;
     border-radius: 2px 0 0 2px;
   }
-  .phone::before { top: 118px; height: 28px; }
-  .phone::after { top: 160px; height: 54px; }
+  .phone::before { top: 16%; height: 3.6%; }
+  .phone::after { top: 22%; height: 7.2%; }
   .screen {
     position: relative;
     height: 100%;
-    border-radius: 40px;
+    border-radius: 14%;
     overflow: hidden;
     background: #111;
     color: white;
+    container-type: size;
   }
   .island {
     position: absolute;
     z-index: 8;
-    top: 12px;
+    top: 1.8%;
     left: 50%;
-    width: 118px;
-    height: 34px;
-    margin-left: -59px;
+    width: 32%;
+    height: 4.4%;
+    transform: translateX(-50%);
     background: #000;
-    border-radius: 20px;
+    border-radius: 999px;
     pointer-events: none;
   }
   .layer {
     position: absolute;
     inset: 0;
-    padding: 58px 22px 22px;
+    padding: 14% 8% 8%;
     opacity: 0;
     transition: opacity 0.35s ease;
   }
@@ -402,8 +408,8 @@
     color: var(--accent);
     margin: 0 0 10px;
   }
-  .hook-card p, .script-layer .hook { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
-  .script-layer .line { margin: 12px 0 0; font-size: 14px; color: #6e6e73; opacity: 0.25; transition: opacity 0.25s ease; }
+  .hook-card p, .script-layer .hook { margin: 0; font-size: clamp(20px, 8.5cqw, 32px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+  .script-layer .line { margin: 0.6em 0 0; font-size: clamp(13px, 4.6cqw, 16px); color: #6e6e73; opacity: 0.25; transition: opacity 0.25s ease; }
   .script-layer .line.show { opacity: 1; color: #1d1d1f; }
   .gameplay {
     background:
@@ -438,7 +444,7 @@
     left: 8%;
   }
   .caps { display: flex; align-items: flex-end; justify-content: center; background: transparent; pointer-events: none; }
-  .caps p { margin: 0 0 28px; text-align: center; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+  .caps p { margin: 0 0 10%; text-align: center; font-size: clamp(20px, 9cqw, 34px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
   .caps span { opacity: 0.45; }
   .caps span.on { opacity: 1; color: #ffe14a; }
   .learn { background: rgba(0,0,0,0.55); display: flex; flex-direction: column; justify-content: flex-end; }
@@ -527,12 +533,14 @@
       grid-template-columns: 1fr;
     }
     #make-video .scrub-pin { grid-template-columns: minmax(0, 1fr) auto; }
+    #vid-title { font-size: 30px; }
+    #vid-copy { font-size: 16px; }
     .hero { min-height: auto; padding-top: 48px; }
     .scrub, .video-scrub { height: 210vh; }
   }
   @media (max-width: 640px) {
     #make-video .scrub-pin { grid-template-columns: 1fr; }
-    .phone { height: min(560px, 68vh); }
+    .phone { height: min(520px, 64vh); }
   }
   @media (max-height: 620px) {
     .scrub { height: auto; }
