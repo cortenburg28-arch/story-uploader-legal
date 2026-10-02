@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Two Projects — Automated TikToks &amp; FaceLook Hero Mode</title>
+<title>Three Projects — Automated TikToks, FaceLook &amp; Deine Strecke</title>
 <style>
   :root {
     --ink: #1d1d1f;
@@ -53,10 +53,10 @@
     justify-content: space-between;
   }
   .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--ink); }
-  .nav-links { display: flex; gap: 28px; }
-  .nav-links a { color: var(--muted); font-size: 14px; transition: color 0.15s ease; }
+  .nav-links { display: flex; gap: 16px; }
+  .nav-links a { color: var(--muted); font-size: 13px; white-space: nowrap; transition: color 0.15s ease; }
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
-  @media (max-width: 640px) { .nav-links { display: none; } }
+  @media (max-width: 760px) { .nav-links { display: none; } }
 
   /* Layout */
   .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
@@ -266,6 +266,7 @@
     <div class="nav-links">
       <a href="#tiktok">Automated TikTok Generator</a>
       <a href="#facelook">FaceLook Hero Bot</a>
+      <a href="#strecke">Deine Strecke</a>
       <a href="#disclosure">Security Finding</a>
     </div>
   </div>
@@ -273,8 +274,8 @@
 
 <header class="hero">
   <div class="wrap">
-    <h1>Two Systems Built from Scratch</h1>
-    <p>A fully automated, local video generation pipeline with an iterative learning loop — alongside an analytical browser bot designed to solve a school memory game and inspect its data security.</p>
+    <h1>Three Systems Built from Scratch</h1>
+    <p>A fully automated, local video generation pipeline with an iterative learning loop — an analytical browser bot designed to solve a school memory game and inspect its data security — and a 3D railway game where trains haul ore and the network grows from what they deliver.</p>
   </div>
 </header>
 
@@ -450,9 +451,86 @@
   </div>
 </section>
 
+<!-- ==================== PROJECT 3 ==================== -->
+<section id="strecke">
+  <div class="wrap">
+    <p class="eyebrow">Project Three</p>
+    <h2>Deine Strecke</h2>
+    <p class="lede">A 3D railway game in the browser. Trains run between mines and a station, ore pays for new track, and several trains share the same rails without driving through each other.</p>
+
+    <p>The game opens on a short coal line and one steam locomotive. Each trip loads coal, iron ore, or gold ore at a mine and unloads it into the station warehouse. That stock is the only currency. The iron line costs coal, the gold line costs coal and iron ore, and later station upgrades are paid in steel and gold bars cast at a smelter. The project lives at <a href="https://github.com/cortenburg28-arch/deine-strecke">github.com/cortenburg28-arch/deine-strecke</a>.</p>
+
+    <h3>How a Line Is Built</h3>
+    <p>Each route starts as a list of corners. Curves are circular arcs of a fixed radius, and the finished centerline becomes an arc-length path, so a train's position is a single distance along the track. Mines, loading chutes, and the station are spots on that path. Three routes exist — coal, iron, and gold — and they share the station throat. Extra station tracks are bypasses that leave the throat and rejoin the same main line.</p>
+
+    <div class="flow">
+      <span class="node">Mine</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">Load</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">Shared throat</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">Station track</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">Unload</span>
+      <span class="arrow">&rarr;</span>
+      <span class="node">Back to the mine</span>
+    </div>
+
+    <h3>Trains That Stay Out of Each Other's Way</h3>
+    <p>Every train is a consist: a locomotive plus wagons spaced along the path. A trip is a drive profile with acceleration, a cruise speed, and braking into the next stop. Before a train advances, the simulation checks the rail ahead and the switches it is about to enter.</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h5>Clearance along the rail</h5>
+        <p>Each consist occupies a span of the path. A move is rejected when it would close the gap to another train below a fixed clearance.</p>
+      </div>
+      <div class="spec-card">
+        <h5>One train per switch</h5>
+        <p>Switch areas are boxes in the world. A train may enter a box only when no other train is already inside it, so two consists never occupy the same junction.</p>
+      </div>
+      <div class="spec-card">
+        <h5>Who yields</h5>
+        <p>When two trains block each other, one backs up until the path is clear. Same-direction traffic yields to the train ahead. Oncoming trains yield by distance from the junction, and the yield holds until the other train has passed.</p>
+      </div>
+      <div class="spec-card">
+        <h5>Least busy platform</h5>
+        <p>The station can grow to three tracks, each with its own unloading pit. On arrival a train picks the quietest track, and it will not move onto a platform that is already occupied.</p>
+      </div>
+    </div>
+
+    <h3>What the Ore Buys</h3>
+    <table>
+      <tr><th>Steam locomotive</th><td>Common, capacity 1. The first one is free. Each extra one costs 3 coal.</td></tr>
+      <tr><th>Diesel locomotive</th><td>Uncommon, capacity 2. Costs 4 coal.</td></tr>
+      <tr><th>Ore train</th><td>Rare, capacity 3. Costs 3 coal and 3 iron ore.</td></tr>
+      <tr><th>Heavy freight locomotive</th><td>Epic, capacity 4. Costs 4 coal and 6 iron ore.</td></tr>
+      <tr><th>Gold train</th><td>Legendary, capacity 5. Costs 4 gold ore and 2 iron ore.</td></tr>
+      <tr><th>Iron line</th><td>4 coal. The short coal line stays.</td></tr>
+      <tr><th>Gold line</th><td>4 coal and 4 iron ore.</td></tr>
+      <tr><th>Smelter</th><td>6 coal and 3 iron ore. Casts steel (2 coal + 1 iron ore) and gold bars (2 coal + 1 gold ore).</td></tr>
+      <tr><th>Station</th><td>A goods shed (2 steel) and a fast ramp (2 steel + 1 gold bar) shorten the unload wait. Two extra tracks can be added.</td></tr>
+    </table>
+
+    <h3>Browser Architecture</h3>
+    <table>
+      <tr><th>Rendering</th><td>Three.js. Locomotives, wagons, mines, the station, and the smelter are built from meshes in code.</td></tr>
+      <tr><th>App shell</th><td>Vite. The interface, the warehouse, the build menu, and the train list live in one HTML page.</td></tr>
+      <tr><th>Simulation</th><td>A fixed-step loop moves every train, resolves yields, and applies loading and unloading at stops.</td></tr>
+      <tr><th>Camera</th><td>Orbit with the mouse, zoom with the scroll wheel, scrub along the track, or follow any train.</td></tr>
+      <tr><th>Saving</th><td>Progress is written automatically to <code>localStorage</code> under the key <code>deine-strecke-v1</code>.</td></tr>
+    </table>
+
+    <div class="callout">
+      <h4>Play it locally</h4>
+      <p>Clone <a href="https://github.com/cortenburg28-arch/deine-strecke">deine-strecke</a>, then run <code>npm install</code> and <code>npm run dev</code>. The in-game interface is in German. Drag to look around, scroll to zoom, A/D or the arrow keys to move along the track, F to follow a train, and B to build the next project you can afford.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <p>Projects documentation prepared for review. Both systems represent explorations of software automation, web reverse-engineering, and ethical security analysis.</p>
+    <p>Projects documentation prepared for review. The three systems cover local video automation, web reverse-engineering with ethical security analysis, and a browser railway simulation.</p>
   </div>
 </footer>
 
