@@ -336,14 +336,15 @@
   #beat-copy, #vid-copy { color: var(--muted); font-size: 18px; margin: 0; max-width: 420px; }
   .beat.video { color: var(--accent); }
   .video-scrub { height: 300vh; }
-  #make-video .scrub-pin {
+  #make-video .scrub-pin,
+  #face-play .scrub-pin {
     grid-template-columns: minmax(240px, 38vw) auto;
     justify-content: center;
     align-items: center;
     gap: clamp(28px, 4vw, 56px);
   }
-  #vid-title { font-size: clamp(34px, 4.6vh, 52px); }
-  #vid-copy { font-size: clamp(20px, 2.8vh, 28px); line-height: 1.4; max-width: 28ch; }
+  #vid-title, #face-title { font-size: clamp(34px, 4.6vh, 52px); }
+  #vid-copy, #face-copy { font-size: clamp(20px, 2.8vh, 28px); line-height: 1.4; max-width: 28ch; }
   .phone-wrap { display: flex; justify-content: center; }
   .film-steps { margin-top: 22px; width: min(100%, 32ch); }
   .phone {
@@ -464,6 +465,19 @@
   }
   .film-steps span { text-align: center; }
   .film-steps span.on { color: var(--accent); }
+  .quiz { background: #f4f4f6; color: #1d1d1f; display: flex; flex-direction: column; gap: 12px; }
+  .quiz h3 { margin: 0; font-size: clamp(20px, 7.2cqw, 30px); letter-spacing: -0.03em; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; min-height: 0; }
+  .q-face { border-radius: 16px; background: #d7d7de; position: relative; }
+  .q-face.pick { outline: 4px solid var(--accent); background: #d6e8ff; }
+  .q-face b { position: absolute; left: 8px; right: 8px; bottom: 8px; font-size: clamp(12px, 3.8cqw, 16px); }
+  .q-names { display: grid; gap: 8px; }
+  .q-name { background: white; border-radius: 14px; padding: 14px 16px; font-weight: 700; font-size: clamp(18px, 5.8cqw, 24px); }
+  .q-name.pick { background: var(--accent); color: white; }
+  .portrait { flex: 1; border-radius: 18px; background: #d6e8ff; min-height: 28%; }
+  .wait-track { height: 22px; background: #e3e3e8; border-radius: 99px; overflow: hidden; }
+  .wait-track i { display: block; height: 100%; width: 100%; background: var(--accent); }
+  .wait-label { margin: 0; font-size: clamp(28px, 10cqw, 42px); font-weight: 700; letter-spacing: -0.03em; }
   .route-card {
     background: white;
     border: 1px solid var(--line);
@@ -528,18 +542,20 @@
 
   @media (max-width: 860px) {
     h1 { font-size: 42px; }
-    h2, #beat-title, #vid-title { font-size: 34px; }
+    h2, #beat-title, #vid-title, #face-title { font-size: 34px; }
     .hero-grid, .stats, .split, .charts, .scrub-pin {
       grid-template-columns: 1fr;
     }
-    #make-video .scrub-pin { grid-template-columns: minmax(0, 1fr) auto; }
-    #vid-title { font-size: 30px; }
-    #vid-copy { font-size: 20px; }
+    #make-video .scrub-pin,
+    #face-play .scrub-pin { grid-template-columns: minmax(0, 1fr) auto; }
+    #vid-title, #face-title { font-size: 30px; }
+    #vid-copy, #face-copy { font-size: 20px; }
     .hero { min-height: auto; padding-top: 48px; }
     .scrub, .video-scrub { height: 210vh; }
   }
   @media (max-width: 640px) {
-    #make-video .scrub-pin { grid-template-columns: 1fr; }
+    #make-video .scrub-pin,
+    #face-play .scrub-pin { grid-template-columns: 1fr; }
     .phone { height: min(520px, 64vh); }
   }
   @media (max-height: 620px) {
@@ -681,41 +697,80 @@
     <h2 class="reveal d1">FaceLook Hero Mode</h2>
     <div class="prose reveal d2">
       <p>FaceLook is a school site for learning names and faces. Hero Mode is a long run of questions. A wrong answer or a slow one costs health, so a high score means hundreds of correct clicks without a miss.</p>
-      <p>Two kinds of question alternate. A name round shows one name and four photos. A face round shows one photo and four names. The photos were stored under the person's name, so the answer was already in the image address. The script did not recognize faces. It matched that filename to the text on the page and clicked.</p>
+      <p>Scroll the phone. A name round and a face round play out, then the script reacts, skips the pause, and waits until the photos match the name.</p>
     </div>
+  </div>
+</section>
 
-    <div class="split">
-      <div class="panel reveal">
-        <div class="rounds">
-          <div class="round">
-            <h3>Name round</h3>
-            <div class="faces" aria-hidden="true">
-              <div class="face"></div>
-              <div class="face on"></div>
-              <div class="face"></div>
-              <div class="face"></div>
+<section class="scrub video-scrub" id="face-play">
+  <div class="scrub-pin">
+    <div>
+      <p class="beat video" id="face-kicker">01 · Name</p>
+      <h2 id="face-title">Name, then the face</h2>
+      <p id="face-copy">The round shows one name and four photos. Blue is the photo whose file is named after that person. That filename is the answer, so the script clicks it.</p>
+      <div class="film-steps" id="face-steps">
+        <span>Name</span>
+        <span>Face</span>
+        <span>Watch</span>
+        <span>Pause</span>
+        <span>Frame</span>
+      </div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone" aria-label="FaceLook questions on a phone">
+        <div class="screen">
+          <div class="island" aria-hidden="true"></div>
+          <div class="layer quiz on" id="face-name">
+            <h3>Find Jordan</h3>
+            <div class="q-grid">
+              <div class="q-face"><b>Alex.png</b></div>
+              <div class="q-face pick"><b>Jordan.png</b></div>
+              <div class="q-face"><b>Sam.png</b></div>
+              <div class="q-face"><b>Riley.png</b></div>
             </div>
-            <p class="caption">The prompt is a name. Blue is the photo whose filename matches that name. That is the click.</p>
           </div>
-          <div class="round">
-            <h3>Face round</h3>
-            <div class="names">
-              <div class="name">Alex</div>
-              <div class="name on">Jordan</div>
-              <div class="name">Sam</div>
-              <div class="name">Riley</div>
+          <div class="layer quiz" id="face-photo">
+            <h3>Who is this?</h3>
+            <div class="portrait"></div>
+            <div class="q-names">
+              <div class="q-name">Alex</div>
+              <div class="q-name pick">Jordan</div>
+              <div class="q-name">Sam</div>
+              <div class="q-name">Riley</div>
             </div>
-            <p class="caption">The prompt is one photo. Blue is the name button that matches the filename. Same match, other direction.</p>
+          </div>
+          <div class="layer quiz" id="face-watch">
+            <h3 id="watch-prompt">New question</h3>
+            <div class="q-grid" id="watch-grid">
+              <div class="q-face" data-watch="0"><b>Alex.png</b></div>
+              <div class="q-face" data-watch="1"><b>Jordan.png</b></div>
+              <div class="q-face" data-watch="2"><b>Sam.png</b></div>
+              <div class="q-face" data-watch="3"><b>Riley.png</b></div>
+            </div>
+          </div>
+          <div class="layer quiz" id="face-pause">
+            <h3>Pause between questions</h3>
+            <p class="wait-label" id="wait-label">300ms</p>
+            <div class="wait-track"><i id="wait-fill"></i></div>
+            <p class="caption">The bar is the game’s wait. Scrolling runs it down to nothing.</p>
+          </div>
+          <div class="layer quiz" id="face-frame">
+            <h3>Find Jordan</h3>
+            <div class="q-grid">
+              <div class="q-face" id="frame-a"><b id="file-a">Alex.png</b></div>
+              <div class="q-face" id="frame-b"><b id="file-b">…</b></div>
+              <div class="q-face"><b>Sam.png</b></div>
+              <div class="q-face"><b>Riley.png</b></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="mechs reveal d1">
-        <div class="mech"><div class="mark">1</div><div><strong>Watch the page</strong><span>A MutationObserver fires when the next question is painted, instead of guessing on a timer.</span></div></div>
-        <div class="mech"><div class="mark">2</div><div><strong>Skip the pause</strong><span>The game waits about 300ms between questions. The script runs that wait immediately.</span></div></div>
-        <div class="mech"><div class="mark">3</div><div><strong>Match the full name</strong><span>Accents, titles, and nicknames are normalized so “Ben” does not count as “Benjamin”.</span></div></div>
-        <div class="mech"><div class="mark">4</div><div><strong>Wait one frame</strong><span>The name often updates before the photos do. The click waits until both stay the same for two frames.</span></div></div>
-      </div>
     </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
     <p class="note reveal">Looking at how those photos loaded also showed the whole student and teacher directory was reachable without a login. That was written up and reported so the school could put the files behind authentication. The score itself was typed in by hand on the normal submit screen.</p>
   </div>
 </section>
@@ -797,6 +852,16 @@ const train = document.getElementById("train");
 const route = document.getElementById("route-path");
 const scrub = document.getElementById("strecke");
 const videoScrub = document.getElementById("make-video");
+const faceScrub = document.getElementById("face-play");
+const faceKicker = document.getElementById("face-kicker");
+const faceTitle = document.getElementById("face-title");
+const faceCopy = document.getElementById("face-copy");
+const faceSteps = [...document.querySelectorAll("#face-steps span")];
+const watchTiles = [...document.querySelectorAll("[data-watch]")];
+const waitFill = document.getElementById("wait-fill");
+const waitLabel = document.getElementById("wait-label");
+const frameB = document.getElementById("frame-b");
+const fileB = document.getElementById("file-b");
 const kicker = document.getElementById("beat-kicker");
 const title = document.getElementById("beat-title");
 const copy = document.getElementById("beat-copy");
@@ -858,6 +923,44 @@ const videoBeats = [
   { at: 0.66, k: "05 · Edit", t: "Cut the frame", d: "FFmpeg crops gameplay to 1080×1920, burns the captions onto the picture, and mixes the voice. This is the file you could post." },
   { at: 0.83, k: "06 · Learn", t: "Read the drop-off", d: "After it is posted, the second people leave is mapped to the sentence spoken then. That finding becomes a rule for the next script." }
 ];
+
+const faceBeats = [
+  { at: 0, k: "01 · Name", t: "Name, then the face", d: "The round shows one name and four photos. Blue is the photo whose file is named after that person. That filename is the answer, so the script clicks it." },
+  { at: 0.22, k: "02 · Face", t: "Face, then the name", d: "The other round shows one photo and four names. Blue is the name that matches the photo’s filename. Same match, the other way around." },
+  { at: 0.44, k: "03 · Watch", t: "Click when it changes", d: "The script watches the page. As soon as the next question is painted, it reads the new name and the new filenames. It does not wait on a timer." },
+  { at: 0.66, k: "04 · Pause", t: "The 300ms wait drops out", d: "The game pauses about 300ms between questions. The script runs that pause immediately, so the next question appears at once." },
+  { at: 0.84, k: "05 · Frame", t: "Wait until it settles", d: "The name often updates one frame before the photos. The click waits until the name and all four filenames stay the same for two frames." }
+];
+
+function renderFace(p) {
+  const beat = [...faceBeats].reverse().find((item) => p >= item.at) || faceBeats[0];
+  if (faceKicker.textContent !== beat.k) {
+    faceKicker.textContent = beat.k;
+    faceTitle.textContent = beat.t;
+    faceCopy.textContent = beat.d;
+  }
+  const step = faceBeats.findIndex((item) => item === beat);
+  faceSteps.forEach((label, index) => label.classList.toggle("on", index <= step));
+
+  showLayer("face-name", p < 0.22);
+  showLayer("face-photo", p >= 0.22 && p < 0.44);
+  showLayer("face-watch", p >= 0.44 && p < 0.66);
+  showLayer("face-pause", p >= 0.66 && p < 0.84);
+  showLayer("face-frame", p >= 0.84);
+
+  const watchP = Math.min(1, Math.max(0, (p - 0.44) / 0.22));
+  const watchPick = Math.min(3, Math.floor(watchP * 4));
+  watchTiles.forEach((tile) => tile.classList.toggle("pick", Number(tile.dataset.watch) === watchPick));
+
+  const pauseP = Math.min(1, Math.max(0, (p - 0.66) / 0.18));
+  const ms = Math.round(300 * (1 - pauseP));
+  waitFill.style.width = `${(ms / 300) * 100}%`;
+  waitLabel.textContent = `${ms}ms`;
+
+  const settled = p >= 0.93;
+  frameB.classList.toggle("pick", settled);
+  fileB.textContent = settled ? "Jordan.png" : "…";
+}
 
 function placeTrain(p) {
   const point = route.getPointAtLength(Math.max(0, Math.min(1, p)) * length);
@@ -934,6 +1037,10 @@ function onScroll() {
   const videoState = scrubProgress(videoScrub);
   const videoP = !videoState.sticky ? 0.7 : reduce ? 0.92 : videoState.p;
   renderVideo(videoP);
+
+  const faceState = scrubProgress(faceScrub);
+  const faceP = !faceState.sticky ? 0.3 : reduce ? 0.9 : faceState.p;
+  renderFace(faceP);
 }
 
 placeTrain(0);
