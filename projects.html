@@ -8,43 +8,55 @@
   :root {
     --ink: #1d1d1f;
     --muted: #6e6e73;
-    --subtle: #86868b;
-    --line: #d2d2d7;
-    --bg: #ffffff;
-    --panel: #f5f5f7;
-    --panel-hover: #ebebf0;
+    --line: #e3e3e8;
+    --bg: #fbfbfd;
+    --panel: #ffffff;
     --accent: #0071e3;
+    --coal: #3a3a3c;
+    --iron: #8d8d92;
+    --gold: #d4a017;
+    --soft: #f2f2f6;
   }
 
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: var(--ink);
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.65;
+    line-height: 1.45;
     font-size: 17px;
+    overflow-x: hidden;
   }
-
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  img, svg { display: block; max-width: 100%; }
 
-  /* Navigation */
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    z-index: 200;
+  }
+
   .nav {
     position: sticky;
     top: 0;
     z-index: 100;
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(251, 251, 253, 0.82);
     border-bottom: 1px solid var(--line);
   }
   .nav-inner {
-    max-width: 960px;
+    max-width: 1080px;
     margin: 0 auto;
     padding: 0 24px;
     height: 52px;
@@ -53,486 +65,627 @@
     justify-content: space-between;
   }
   .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--ink); }
-  .nav-links { display: flex; gap: 16px; }
-  .nav-links a { color: var(--muted); font-size: 13px; white-space: nowrap; transition: color 0.15s ease; }
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a { color: var(--muted); font-size: 13px; white-space: nowrap; }
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
-  @media (max-width: 760px) { .nav-links { display: none; } }
+  @media (max-width: 720px) { .nav-links { display: none; } }
 
-  /* Layout */
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
-  /* Hero */
-  .hero { text-align: center; padding: 110px 24px 84px; }
-  .hero h1 {
-    font-size: 56px;
-    line-height: 1.06;
-    letter-spacing: -0.025em;
-    font-weight: 700;
-    margin: 0 0 18px;
-    color: var(--ink);
-  }
-  .hero p {
-    font-size: 22px;
-    line-height: 1.4;
-    color: var(--muted);
-    max-width: 640px;
-    margin: 0 auto;
-    letter-spacing: -0.01em;
-  }
-  @media (max-width: 640px) {
-    .hero { padding: 70px 20px 50px; }
-    .hero h1 { font-size: 38px; }
-    .hero p { font-size: 19px; }
-  }
-
-  /* Sections */
-  section { padding: 80px 0; border-top: 1px solid var(--line); }
-  .eyebrow {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 10px;
-  }
-  section h2 {
-    font-size: 40px;
-    line-height: 1.12;
-    letter-spacing: -0.02em;
-    font-weight: 700;
-    margin: 0 0 12px;
-    color: var(--ink);
-  }
-  section .lede {
-    font-size: 21px;
-    line-height: 1.45;
-    color: var(--muted);
-    margin: 0 0 44px;
-    letter-spacing: -0.01em;
-  }
-  @media (max-width: 640px) {
-    section { padding: 56px 0; }
-    section h2 { font-size: 30px; }
-    section .lede { font-size: 18px; margin-bottom: 32px; }
-  }
-
-  h3 {
-    font-size: 24px;
-    letter-spacing: -0.015em;
-    font-weight: 600;
-    margin: 48px 0 14px;
-    color: var(--ink);
-  }
-  h4 {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 24px 0 8px;
-    color: var(--ink);
-  }
-  p { margin: 0 0 18px; }
-
-  ul { margin: 0 0 20px; padding-left: 22px; }
-  li { margin: 0 0 8px; }
-
-  .muted { color: var(--muted); }
-
-  /* Numbered Steps */
-  ol.steps { list-style: none; counter-reset: step; margin: 0 0 20px; padding: 0; }
-  ol.steps li {
-    counter-increment: step;
-    position: relative;
-    padding-left: 44px;
-    margin-bottom: 18px;
-  }
-  ol.steps li::before {
-    content: counter(step);
-    position: absolute;
-    left: 0;
-    top: 2px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--panel);
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 600;
+  .hero {
+    min-height: 100vh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    padding: 72px 0 48px;
   }
-
-  /* Stage cards */
-  .stage-box {
-    background: var(--panel);
-    border-radius: 18px;
-    padding: 26px 28px 16px;
-    margin: 0 0 20px;
-  }
-  .stage-box .stage-meta {
+  .eyebrow {
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-size: 64px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    margin: 0 0 16px;
+  }
+  .lede {
+    max-width: 560px;
+    font-size: 21px;
     color: var(--muted);
-    margin: 0 0 4px;
+    margin: 0 0 40px;
   }
-  .stage-box h4 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    letter-spacing: -0.01em;
-  }
-  .stage-box p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 12px;
-  }
-
-  /* Comparison grid */
-  .spec-grid {
+  .hero-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    margin: 24px 0;
   }
-  @media (max-width: 640px) { .spec-grid { grid-template-columns: 1fr; } }
-  .spec-card {
+  .tile {
     background: var(--panel);
-    border-radius: 16px;
-    padding: 22px 24px;
-  }
-  .spec-card h5 {
-    margin: 0 0 6px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .spec-card p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* Summary Table */
-  table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-size: 15px; }
-  th, td { text-align: left; padding: 12px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { color: var(--muted); font-weight: 500; width: 32%; }
-
-  /* Callout */
-  .callout {
-    border-radius: 16px;
-    padding: 22px 26px;
-    margin: 32px 0;
-    background: #fbfbfd;
     border: 1px solid var(--line);
-  }
-  .callout h4 { margin: 0 0 8px; font-size: 17px; }
-  .callout p { margin: 0; font-size: 15px; color: var(--muted); line-height: 1.6; }
-
-  /* Flow Diagram */
-  .flow {
+    border-radius: 22px;
+    padding: 22px;
+    min-height: 220px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+    color: inherit;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .tile:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); text-decoration: none; }
+  .tile strong { display: block; font-size: 22px; letter-spacing: -0.02em; margin-top: 16px; }
+  .tile span { color: var(--muted); font-size: 14px; }
+
+  .scroll-cue {
+    margin-top: 48px;
+    display: flex;
     align-items: center;
     gap: 10px;
-    margin: 8px 0 36px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
-  .flow .node {
+  .chevron {
+    width: 22px;
+    height: 22px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg) translateY(-4px);
+    animation: bob 1.4s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: rotate(45deg) translateY(-6px); }
+    50% { transform: rotate(45deg) translateY(2px); }
+  }
+
+  section.block { padding: 96px 0; scroll-margin-top: 52px; }
+  h2 {
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 10px;
+  }
+  .one {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 0 32px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    animation: none;
+  }
+  .reveal.in {
+    animation: rise 0.8s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .reveal.d1 { animation-delay: 0.08s; }
+  .reveal.d2 { animation-delay: 0.16s; }
+  .reveal.d3 { animation-delay: 0.24s; }
+  @keyframes rise {
+    to { opacity: 1; transform: none; }
+  }
+
+  .panel {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink);
+    border-radius: 24px;
+    padding: 28px;
   }
-  .flow .arrow { color: var(--subtle); font-size: 14px; }
 
-  /* Footer */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    position: relative;
+  }
+  .step {
+    background: var(--soft);
+    border-radius: 16px;
+    padding: 16px 12px 14px;
+    min-height: 128px;
+  }
+  .step b {
+    display: block;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .step em {
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .draw-line {
+    height: 3px;
+    margin: 18px 8px 0;
+    background: var(--line);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .draw-line i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+  }
+  .reveal.in .draw-line i {
+    width: 100%;
+    transition: width 1.3s cubic-bezier(.16,1,.3,1);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .stat {
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    background: var(--ink);
+    color: white;
+  }
+  .stat b {
+    display: block;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .stat span { color: rgba(255,255,255,0.72); font-size: 14px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    background: var(--soft);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; }
+  .rounds { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .round {
+    background: var(--soft);
+    border-radius: 18px;
+    padding: 16px;
+  }
+  .round h3 { margin: 0 0 12px; font-size: 16px; }
+  .faces { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .face {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background: #e4e4ea;
+  }
+  .face.on { outline: 3px solid var(--accent); background: #d6e8ff; }
+  .names { display: grid; gap: 8px; }
+  .name {
+    background: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .name.on { background: var(--accent); color: white; }
+
+  .mechs { display: grid; gap: 10px; }
+  .mech {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 12px;
+    align-items: center;
+    background: var(--soft);
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: white;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .mech strong { display: block; font-size: 15px; }
+  .mech span { color: var(--muted); font-size: 13px; }
+
+  .note {
+    margin-top: 16px;
+    border-left: 3px solid var(--accent);
+    padding: 4px 0 4px 16px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .scrub { height: 230vh; position: relative; }
+  .scrub-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 32px;
+    align-items: center;
+    padding: 72px 24px 32px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .beat {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 8px;
+  }
+  #beat-title {
+    font-size: 48px;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px;
+  }
+  #beat-copy { color: var(--muted); font-size: 18px; margin: 0; max-width: 420px; }
+  .route-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: 12px;
+  }
+  #route-svg { width: 100%; height: auto; }
+
+  .charts { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; }
+  .chart h3, .costs h3 { margin: 0 0 18px; font-size: 18px; }
+  .row {
+    display: grid;
+    grid-template-columns: 92px 1fr 28px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .track {
+    height: 14px;
+    background: var(--soft);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .fill {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: var(--accent);
+  }
+  .reveal.in .fill {
+    width: var(--w);
+    transition: width 1s cubic-bezier(.16,1,.3,1);
+  }
+  .fill.gold { background: var(--gold); }
+  .fill.coal { background: var(--coal); }
+
+  .cost-list { display: grid; gap: 10px; }
+  .cost {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    font-size: 14px;
+  }
+  .pips { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--coal);
+  }
+  .pip.iron { background: var(--iron); }
+  .pip.gold { background: var(--gold); }
+
   footer {
-    border-top: 1px solid var(--line);
     padding: 48px 24px 72px;
     text-align: center;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 860px) {
+    h1 { font-size: 42px; }
+    h2, #beat-title { font-size: 34px; }
+    .hero-grid, .pipeline, .stats, .split, .charts, .scrub-pin {
+      grid-template-columns: 1fr;
+    }
+    .pipeline { grid-template-columns: repeat(2, 1fr); }
+    .hero { min-height: auto; padding-top: 48px; }
+    .scrub { height: 190vh; }
+  }
+  @media (max-height: 620px) {
+    .scrub { height: auto; }
+    .scrub-pin { position: relative; height: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; animation: none; }
+    .chevron { animation: none; }
+    .fill, .draw-line i { width: var(--w, 100%); transition: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 
 <nav class="nav">
   <div class="nav-inner">
-    <span class="nav-brand">Projects Overview</span>
+    <span class="nav-brand">Projects</span>
     <div class="nav-links">
-      <a href="#tiktok">Automated TikTok Generator</a>
-      <a href="#facelook">FaceLook Hero Bot</a>
+      <a href="#tiktok">TikToks</a>
+      <a href="#facelook">FaceLook</a>
       <a href="#strecke">Deine Strecke</a>
-      <a href="#disclosure">Security Finding</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
-    <h1>Three Systems Built from Scratch</h1>
-    <p>A fully automated, local video generation pipeline with an iterative learning loop — an analytical browser bot designed to solve a school memory game and inspect its data security — and a 3D railway game where trains haul ore and the network grows from what they deliver.</p>
+    <p class="eyebrow reveal">Three systems</p>
+    <h1 class="reveal d1">Built from scratch.</h1>
+    <p class="lede reveal d2">A local video machine, a browser game bot, and a 3D railway. Scroll to see how each one works.</p>
+    <div class="hero-grid">
+      <a class="tile reveal d1" href="#tiktok">
+        <svg viewBox="0 0 160 64" width="160" height="64" aria-hidden="true">
+          <g fill="#0071e3">
+            <rect x="8" y="28" width="8" height="28" rx="3"/>
+            <rect x="24" y="16" width="8" height="40" rx="3"/>
+            <rect x="40" y="34" width="8" height="22" rx="3"/>
+            <rect x="56" y="8" width="8" height="48" rx="3"/>
+            <rect x="72" y="22" width="8" height="34" rx="3"/>
+            <rect x="88" y="12" width="8" height="44" rx="3"/>
+            <rect x="104" y="30" width="8" height="26" rx="3"/>
+            <rect x="120" y="18" width="8" height="38" rx="3"/>
+            <rect x="136" y="26" width="8" height="30" rx="3"/>
+          </g>
+        </svg>
+        <div><strong>TikToks</strong><span>Write, voice, edit, learn.</span></div>
+      </a>
+      <a class="tile reveal d2" href="#facelook">
+        <svg viewBox="0 0 120 64" width="120" height="64" aria-hidden="true">
+          <rect x="4" y="4" width="24" height="24" rx="6" fill="#d6e8ff" stroke="#0071e3" stroke-width="2"/>
+          <rect x="34" y="4" width="24" height="24" rx="6" fill="#e4e4ea"/>
+          <rect x="64" y="4" width="24" height="24" rx="6" fill="#e4e4ea"/>
+          <rect x="94" y="4" width="24" height="24" rx="6" fill="#e4e4ea"/>
+          <rect x="4" y="36" width="114" height="22" rx="8" fill="#1d1d1f"/>
+        </svg>
+        <div><strong>FaceLook</strong><span>Name the face. Instantly.</span></div>
+      </a>
+      <a class="tile reveal d3" href="#strecke">
+        <svg viewBox="0 0 160 64" width="160" height="64" aria-hidden="true">
+          <path d="M8 46 C 40 46, 50 18, 80 18 S 120 46, 152 28" fill="none" stroke="#1d1d1f" stroke-width="3"/>
+          <circle cx="18" cy="44" r="5" fill="#3a3a3c"/>
+          <circle cx="80" cy="18" r="5" fill="#8d8d92"/>
+          <circle cx="148" cy="29" r="5" fill="#d4a017"/>
+        </svg>
+        <div><strong>Deine Strecke</strong><span>Ore in. Track out.</span></div>
+      </a>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><i class="chevron"></i> Scroll</div>
   </div>
 </header>
 
-<!-- ==================== PROJECT 1 ==================== -->
-<section id="tiktok">
+<section class="block" id="tiktok">
   <div class="wrap">
-    <p class="eyebrow">Project One</p>
-    <h2>Automated Faceless TikTok Generator</h2>
-    <p class="lede">A Python program running entirely on a local machine that writes, voices, times, and edits short videos, then measures their audience retention to improve future stories.</p>
+    <p class="eyebrow reveal">01</p>
+    <h2 class="reveal d1">Automated TikToks</h2>
+    <p class="one reveal d2">One local command turns an idea into a vertical video, then uses watch time to write a better one.</p>
 
-    <p>Short-form vertical video platforms like TikTok feature a popular genre: "faceless storytime" videos. These typically pair a gripping, strange, or absurd first-person narrative with synthetic speech, bold animated word-by-word subtitles, and mesmerizing background gameplay footage. Producing these videos manually is labor-intensive: coming up with ideas, editing the text, recording audio, synchronizing subtitles word by word, cutting footage, and reviewing analytics to figure out why viewers lost interest.</p>
-
-    <p>This project automates that entire lifecycle into a single pipeline. Crucially, the entire stack runs <strong>locally on my Apple Mac</strong> without recurring cloud API fees, using open-weight models for text generation, speech synthesis, and audio alignment.</p>
-
-    <h3>The End-to-End Pipeline</h3>
-    <p>A single CLI command triggers an automated six-stage workflow that takes an idea from zero to a ready-to-post 1080&times;1920 video:</p>
-
-    <div class="flow">
-      <span class="node">1. Pick Strategy</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">2. Pitch &amp; Write</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">3. Voice Synthesis</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">4. Word Alignment</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">5. Video Assembly</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">6. Learnings Loop</span>
+    <div class="panel reveal">
+      <div class="pipeline">
+        <div class="step"><b>01</b><em>Strategy</em></div>
+        <div class="step"><b>02</b><em>Script</em></div>
+        <div class="step"><b>03</b><em>Voice</em></div>
+        <div class="step"><b>04</b><em>Captions</em></div>
+        <div class="step"><b>05</b><em>Edit</em></div>
+        <div class="step"><b>06</b><em>Learn</em></div>
+      </div>
+      <div class="draw-line" aria-hidden="true"><i></i></div>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">Qwen 27B</span>
+        <span class="chip">Kokoro</span>
+        <span class="chip">faster-whisper</span>
+        <span class="chip">FFmpeg</span>
+        <span class="chip">On this Mac</span>
+      </div>
     </div>
 
-    <div class="stage-box">
-      <p class="stage-meta">Stage 1 &middot; Strategy &amp; Exploration</p>
-      <h4>Hypothesis Selection</h4>
-      <p>Before generating anything, the program selects a testing profile: one category (such as <em>unhinged neighbor</em>, <em>absurd petty revenge</em>, or <em>bizarre workplace chaos</em>), one hook format (such as a direct provocative question, a shocking factual statement, an intriguing opening like "I never told anyone...", or a chaotic mid-action start), and one synthetic voice profile. These variables are recorded into structured metadata for every video, allowing statistical comparison across hundreds of posts.</p>
-    </div>
-
-    <div class="stage-box">
-      <p class="stage-meta">Stage 2 &middot; Multi-Pass Story Generation</p>
-      <h4>Idea Pitching, Selection, and Script Polish</h4>
-      <p>Instead of relying on a single prompt, the local large language model (Qwen 27B running locally via LM Studio) operates across multiple distinct passes:</p>
-      <ul>
-        <li><strong>Pitching 5 ideas:</strong> The model generates five radically different story concepts, each with a clear premise, an opening hook under 15 words, and a concluding twist.</li>
-        <li><strong>Editorial evaluation:</strong> Running in an "editorial" role, the model evaluates all five ideas against strict retention criteria (Is the hook irresistible? Is the premise absurd yet delivered deadpan? Can it escalate naturally for 80 seconds?) and selects the single strongest pitch.</li>
-        <li><strong>Full script creation:</strong> The selected idea is written into a complete 330–400 word script designed for an exact speaking duration between 75 and 85 seconds.</li>
-        <li><strong>Revision &amp; Tightening:</strong> A separate revision prompt cuts unnecessary middle segments, accelerates the escalation, and sharpens the final twist to encourage comments and debate.</li>
-      </ul>
-      <p>Every story prompt dynamically injects all accumulated rules from <code>Learnings.md</code> as well as all previously used titles, preventing repetition and actively reinforcing what worked in past videos.</p>
-    </div>
-
-    <div class="stage-box">
-      <p class="stage-meta">Stage 3 &middot; High-Fidelity Voice Synthesis</p>
-      <h4>Neural Speech Generation</h4>
-      <p>The script is rendered using Kokoro, a lightweight local neural text-to-speech engine. The synthesized audio is saved as uncompressed WAV. Because TikTok watch-time algorithms heavily reward content over 60 seconds that maintains high completion rates, the system verifies the exact duration: if the synthesized speech falls below the minimum target duration, the script is dynamically expanded with additional narrative escalations and re-synthesized until it hits the target window.</p>
-    </div>
-
-    <div class="stage-box">
-      <p class="stage-meta">Stage 4 &middot; Speech Recognition &amp; Forced Alignment</p>
-      <h4>Millisecond Word-Level Timestamps</h4>
-      <p>To display high-energy, animated on-screen captions, every single word needs an exact start and end timestamp. The program runs faster-whisper locally over the synthesized voice file. Because raw speech recognition can mishear words or alter punctuation, the system runs a sequence-matching alignment algorithm (using diff opcode matching) that locks Whisper's detected timestamps onto the original, perfectly spelled script text.</p>
-      <p>The aligned words are compiled into an Advanced SubStation Alpha (<code>.ass</code>) subtitle track. Words are grouped into brief 1-to-3 word display chunks, rendered in prominent bold typography with heavy dark outlines, an energetic scale-pop animation on appearance, and vivid color highlighting on the exact active word currently being spoken.</p>
-    </div>
-
-    <div class="stage-box">
-      <p class="stage-meta">Stage 5 &middot; Video Assembly &amp; Rendering</p>
-      <h4>FFmpeg Compositing</h4>
-      <p>Video rendering is executed through an automated FFmpeg pipeline:</p>
-      <ul>
-        <li>It inspects a high-resolution, long-duration gameplay recording (such as Minecraft parkour) and chooses a random starting point long enough to cover the audio plus a brief breathing tail.</li>
-        <li>It crops the 16:9 gameplay to a 9:16 aspect ratio (1080&times;1920), scales with a Lanczos filter, applies a subtle unsharp mask for crisp mobile viewing, and burns in the styled ASS subtitles.</li>
-        <li>The vocal track is mixed and encoded using AAC audio, while the video is encoded using hardware or software H.264 with high-profile fast-start flags for immediate playback on mobile devices.</li>
-      </ul>
-    </div>
-
-    <div class="stage-box">
-      <p class="stage-meta">Stage 6 &middot; Feedback Loop &amp; Autonomous Learning</p>
-      <h4>Retention Analysis and Continuous Improvement</h4>
-      <p>Once a video is published, actual viewer metrics (total views, average watch time, full completion rate, and the exact drop-off second from the retention curve) are recorded back into an Obsidian vault markdown note.</p>
-      <p>When running the analysis engine, the language model reads the video's script, word timestamps, and channel averages. By mapping the drop-off second to the exact sentence spoken at that moment, the AI diagnoses precisely why audience retention dipped (for example: a pause that was too long, an escalation that lost plausibility, or a confusing transition). It synthesizes these findings across all posted videos into a living rulebook: rules supported by multiple videos become permanent editorial guidelines, while single-video patterns remain tentative until verified over 10+ posts.</p>
-    </div>
-
-    <h3>Local Architecture &amp; Privacy</h3>
-    <table>
-      <tr><th>Language &amp; Environment</th><td>Python 3.12, running entirely locally on macOS</td></tr>
-      <tr><th>Text Generation</th><td>Qwen 27B running locally in LM Studio via local OpenAI-compatible API</td></tr>
-      <tr><th>Voice Synthesis</th><td>Kokoro neural TTS running locally on CPU/Metal</td></tr>
-      <tr><th>Audio Alignment</th><td>faster-whisper (int8) with sequence alignment for zero spelling errors</td></tr>
-      <tr><th>Video Processing</th><td>FFmpeg with custom ASS subtitle styling, Lanczos scaling, and H.264 encoding</td></tr>
-      <tr><th>Knowledge Storage</th><td>Plain Markdown files in an Obsidian vault with frontmatter metadata</td></tr>
-      <tr><th>User Interface</th><td>Built-in local Flask dashboard for inspecting videos, jobs, and retention graphs</td></tr>
-    </table>
-
-    <div class="callout">
-      <h4>Platform Integrity &amp; Responsible Automation</h4>
-      <p>Every generated video automatically includes TikTok's official AI-generated content label. Metrics are ingested cleanly rather than scraped via fragile web bots that breach platform terms, maintaining high reliability and full compliance.</p>
+    <div class="stats">
+      <div class="stat reveal"><b>75–85s</b><span>Spoken length</span></div>
+      <div class="stat reveal d1"><b>1080×1920</b><span>Finished frame</span></div>
+      <div class="stat reveal d2"><b>6 steps</b><span>Idea to file</span></div>
     </div>
   </div>
 </section>
 
-<!-- ==================== PROJECT 2 ==================== -->
-<section id="facelook">
+<section class="block" id="facelook">
   <div class="wrap">
-    <p class="eyebrow">Project Two</p>
-    <h2>FaceLook Hero Mode: How I Reached the Leaderboard</h2>
-    <p class="lede">A lightweight browser-based automation script that solved an educational face-recognition game with near-perfect accuracy and sub-millisecond reaction speeds.</p>
+    <p class="eyebrow reveal">02</p>
+    <h2 class="reveal d1">FaceLook Hero Mode</h2>
+    <p class="one reveal d2">A script in the browser answers each question the moment it appears.</p>
 
-    <h3>1. The Premise of the Game</h3>
-    <p>FaceLook is a school web application designed to help students and faculty learn each other's names and faces. In <strong>Hero Mode</strong>, players face an endurance test of hundreds of consecutive questions under time and health constraints:</p>
-    <ul>
-      <li><strong>Name Round:</strong> The game displays a target person's name and four face photographs. The player must select the matching photo.</li>
-      <li><strong>Face Round:</strong> The game shows one large photograph and four candidate names. The player must select the correct name.</li>
-      <li><strong>Health &amp; Streaks:</strong> Correct answers increase the streak multiplier and restore health; incorrect answers or hesitation deplete health until game over. Top leaderboard placement requires high streaks across hundreds of questions without missing.</li>
-    </ul>
-
-    <h3>2. The Underlying Architectural Vulnerability</h3>
-    <p>During manual play, inspecting the page source and network traffic revealed a critical design shortcut: <strong>every face image file on the server was named directly after the person pictured</strong> (for example, <code>First_Last_ClassYear_RandomHash.png</code>).</p>
-    <p>Because the image URL itself held the plaintext answer, solving the round did not require complex facial recognition or computer vision models. It was fundamentally an algorithmic text-matching challenge between the on-screen prompt and the image filename attributes already present in the DOM.</p>
-
-    <h3>3. How the Bot Worked in Practice</h3>
-    <p>The bot was designed as a lightweight console script pasted directly into the browser's developer tools on the active game page. Its internal architecture solved three key challenges:</p>
-
-    <div class="spec-grid">
-      <div class="spec-card">
-        <h5>DOM Mutation Monitoring</h5>
-        <p>Rather than relying on blind polling or fixed interval timers, the bot configured a <code>MutationObserver</code> paired with <code>requestAnimationFrame</code>. It continuously monitored changes to image sources, button classes, and text elements, reacting the very millisecond a new question rendered.</p>
+    <div class="split">
+      <div class="panel reveal">
+        <div class="rounds">
+          <div class="round">
+            <h3>Name → face</h3>
+            <div class="faces" aria-hidden="true">
+              <div class="face"></div>
+              <div class="face on"></div>
+              <div class="face"></div>
+              <div class="face"></div>
+            </div>
+          </div>
+          <div class="round">
+            <h3>Face → name</h3>
+            <div class="names">
+              <div class="name">Alex</div>
+              <div class="name on">Jordan</div>
+              <div class="name">Sam</div>
+              <div class="name">Riley</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="spec-card">
-        <h5>Delay Collapsing ("Turbo Mode")</h5>
-        <p>The game normally enforced an artificial ~300ms pause between questions. The bot monkey-patched <code>window.setTimeout</code>, detecting transitions between 200ms and 500ms and immediately executing them at 0ms. This made questions appear continuously without waiting.</p>
-      </div>
-      <div class="spec-card">
-        <h5>Exact Name Normalization</h5>
-        <p>To prevent false positives (such as "Ben" incorrectly matching "Benjamin"), strings were stripped of accents, diacritics, punctuation, and honorifics (Mr., Ms., Dr.), and compared using strict multi-token key sets.</p>
-      </div>
-      <div class="spec-card">
-        <h5>Handling Real-World Exceptions</h5>
-        <p>The bot maintained an override dictionary for school-specific nicknames (where a student's file name said "John" but the game displayed "Peter"), accounted for faculty staff titles, and handled special pet rounds.</p>
+      <div class="mechs reveal d1">
+        <div class="mech"><div class="mark">1</div><div><strong>Watch the page</strong><span>React when the question changes.</span></div></div>
+        <div class="mech"><div class="mark">2</div><div><strong>Skip the pause</strong><span>The built-in wait between rounds drops out.</span></div></div>
+        <div class="mech"><div class="mark">3</div><div><strong>Match the full name</strong><span>Nicknames and titles stay exact.</span></div></div>
+        <div class="mech"><div class="mark">4</div><div><strong>Wait one frame</strong><span>Click only after the photos settle.</span></div></div>
       </div>
     </div>
-
-    <h3>4. Overcoming High-Speed Race Conditions</h3>
-    <p>Under turbo speed, a subtle race condition emerged: the game's client-side framework frequently updated the text prompt one frame before updating the four image source URLs. If the bot clicked instantly on text change, it would occasionally click based on an outdated image from the previous question, breaking the streak.</p>
-    <p>To resolve this, a <strong>frame-stabilization gate</strong> was implemented: the script generated a unique signature combining the current prompt and all option image URLs, requiring this signature to remain completely stable across two consecutive animation frames before authorizing a click. This eliminated race condition errors completely while retaining maximum game speed.</p>
-
-    <h3>5. Leaderboard Submission</h3>
-    <p>The automation strictly restricted its operation to answering the in-game questions. Once the endurance run concluded, the game presented its standard score submission screen. The player entered their display name manually and submitted the legitimate high score to the public leaderboard.</p>
+    <p class="note reveal">The photo files were reachable without a login. That was reported so the school could put them behind authentication.</p>
   </div>
 </section>
 
-<!-- ==================== PROJECT 3 ==================== -->
-<section id="disclosure">
-  <div class="wrap">
-    <p class="eyebrow">Responsible Disclosure</p>
-    <h2>Security Finding: Unauthenticated Photo Directory</h2>
-    <p class="lede">While building the automation, an inspection of the client application revealed that the entire database of student and teacher photographs was completely accessible to anyone on the internet without a password.</p>
-
-    <h3>The Discovery</h3>
-    <p>In web applications handling sensitive internal directory data, access to personal photographs and rosters should require active student or faculty authentication. While examining the asset loading sequence for FaceLook, I discovered that the frontend loaded an unauthenticated JavaScript utility file containing an index of all asset categories, class rosters, and relative image paths.</p>
-    <p>Using these paths, any external user could query the file server directly and download high-resolution photographs of every single enrolled student and faculty member, complete with their first name, last name, graduation year, and assigned status — without entering any credentials, session tokens, or school passwords.</p>
-
-    <h3>Verification via Batch Ingestion</h3>
-    <p>To understand the scope of the exposure, a verification script was developed. The script performed the following steps:</p>
-    <ol class="steps">
-      <li><strong>Manifest Extraction:</strong> Fetched the public JavaScript manifest file and parsed all referenced image file paths using regular expressions.</li>
-      <li><strong>Concurrent Download:</strong> Initialized a multi-threaded request pool to test whether individual asset URLs enforced any authentication, CORS boundaries, or IP-based rate limiting.</li>
-      <li><strong>Storage &amp; Audit:</strong> Verified that hundreds of megabytes of personal identity photos could be harvested directly across all grades, faculty departments, and school years.</li>
-    </ol>
-
-    <div class="callout">
-      <h4>Ethical Responsibility &amp; Resolution</h4>
-      <p>Building a high-score game bot is a harmless exploration of frontend logic. However, discovering that an entire school directory's biometric and identity photographs are exposed without authentication is a serious privacy and safety concern. Rather than sharing or misusing the collected data, the entire vulnerability — including the mechanism of the exposure and remediation steps — was documented responsibly so the school administration could secure the image storage behind proper role-based authentication.</p>
+<section class="scrub" id="strecke">
+  <div class="scrub-pin">
+    <div>
+      <p class="beat" id="beat-kicker">Railway</p>
+      <h2 id="beat-title">Deine Strecke</h2>
+      <p id="beat-copy">Trains haul coal, iron, and gold. The ore pays for more track.</p>
+      <p class="one" style="margin-top:18px"><a href="https://github.com/cortenburg28-arch/deine-strecke">github.com/cortenburg28-arch/deine-strecke</a></p>
+    </div>
+    <div class="route-card">
+      <svg id="route-svg" viewBox="0 0 760 280" role="img" aria-label="A train moving from the coal mine toward the station">
+        <path id="route-path" d="M70 190 C 180 190, 200 80, 320 80 S 500 200, 560 170 S 700 90, 700 90" fill="none" stroke="#d2d2d7" stroke-width="14" stroke-linecap="round"/>
+        <path d="M70 190 C 180 190, 200 80, 320 80 S 500 200, 560 170 S 700 90, 700 90" fill="none" stroke="#1d1d1f" stroke-width="3" stroke-linecap="round"/>
+        <g id="mines">
+          <circle cx="70" cy="190" r="9" fill="#3a3a3c"/>
+          <circle cx="320" cy="80" r="9" fill="#8d8d92"/>
+          <circle cx="700" cy="90" r="9" fill="#d4a017"/>
+        </g>
+        <g id="train" transform="translate(70 190)">
+          <rect x="-22" y="-16" width="28" height="16" rx="3" fill="#1d1d1f"/>
+          <rect x="8" y="-12" width="16" height="12" rx="2" fill="#c4a15a"/>
+          <circle cx="-14" cy="2" r="3.5" fill="#1d1d1f"/>
+          <circle cx="-4" cy="2" r="3.5" fill="#1d1d1f"/>
+          <circle cx="16" cy="2" r="3.5" fill="#1d1d1f"/>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
 
-<!-- ==================== PROJECT 3 ==================== -->
-<section id="strecke">
+<section class="block" id="yard">
   <div class="wrap">
-    <p class="eyebrow">Project Three</p>
-    <h2>Deine Strecke</h2>
-    <p class="lede">A 3D railway game in the browser. Trains run between mines and a station, ore pays for new track, and several trains share the same rails without driving through each other.</p>
-
-    <p>The game opens on a short coal line and one steam locomotive. Each trip loads coal, iron ore, or gold ore at a mine and unloads it into the station warehouse. That stock is the only currency. The iron line costs coal, the gold line costs coal and iron ore, and later station upgrades are paid in steel and gold bars cast at a smelter. The project lives at <a href="https://github.com/cortenburg28-arch/deine-strecke">github.com/cortenburg28-arch/deine-strecke</a>.</p>
-
-    <h3>How a Line Is Built</h3>
-    <p>Each route starts as a list of corners. Curves are circular arcs of a fixed radius, and the finished centerline becomes an arc-length path, so a train's position is a single distance along the track. Mines, loading chutes, and the station are spots on that path. Three routes exist — coal, iron, and gold — and they share the station throat. Extra station tracks are bypasses that leave the throat and rejoin the same main line.</p>
-
-    <div class="flow">
-      <span class="node">Mine</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">Load</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">Shared throat</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">Station track</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">Unload</span>
-      <span class="arrow">&rarr;</span>
-      <span class="node">Back to the mine</span>
-    </div>
-
-    <h3>Trains That Stay Out of Each Other's Way</h3>
-    <p>Every train is a consist: a locomotive plus wagons spaced along the path. A trip is a drive profile with acceleration, a cruise speed, and braking into the next stop. Before a train advances, the simulation checks the rail ahead and the switches it is about to enter.</p>
-
-    <div class="spec-grid">
-      <div class="spec-card">
-        <h5>Clearance along the rail</h5>
-        <p>Each consist occupies a span of the path. A move is rejected when it would close the gap to another train below a fixed clearance.</p>
+    <p class="eyebrow reveal">The yard</p>
+    <h2 class="reveal d1">What the ore buys</h2>
+    <p class="one reveal d2">Capacity grows with the locomotive. Unload time falls as the station is upgraded.</p>
+    <div class="charts">
+      <div class="panel chart reveal">
+        <h3>Wagon capacity</h3>
+        <div class="row"><span>Steam</span><div class="track"><div class="fill" style="--w:20%"></div></div><span>1</span></div>
+        <div class="row"><span>Diesel</span><div class="track"><div class="fill" style="--w:40%"></div></div><span>2</span></div>
+        <div class="row"><span>Ore</span><div class="track"><div class="fill" style="--w:60%"></div></div><span>3</span></div>
+        <div class="row"><span>Heavy</span><div class="track"><div class="fill" style="--w:80%"></div></div><span>4</span></div>
+        <div class="row"><span>Gold</span><div class="track"><div class="fill gold" style="--w:100%"></div></div><span>5</span></div>
+        <h3 style="margin-top:28px">Unload wait</h3>
+        <div class="row"><span>Start</span><div class="track"><div class="fill coal" style="--w:100%"></div></div><span>3.5s</span></div>
+        <div class="row"><span>Shed</span><div class="track"><div class="fill coal" style="--w:57%"></div></div><span>2s</span></div>
+        <div class="row"><span>Ramp</span><div class="track"><div class="fill coal" style="--w:29%"></div></div><span>1s</span></div>
       </div>
-      <div class="spec-card">
-        <h5>One train per switch</h5>
-        <p>Switch areas are boxes in the world. A train may enter a box only when no other train is already inside it, so two consists never occupy the same junction.</p>
+      <div class="panel costs reveal d1">
+        <h3>Price in ore</h3>
+        <div class="cost-list" id="costs"></div>
+        <p class="note">Coal is dark, iron is gray, gold is yellow. The first steam locomotive is free.</p>
       </div>
-      <div class="spec-card">
-        <h5>Who yields</h5>
-        <p>When two trains block each other, one backs up until the path is clear. Same-direction traffic yields to the train ahead. Oncoming trains yield by distance from the junction, and the yield holds until the other train has passed.</p>
-      </div>
-      <div class="spec-card">
-        <h5>Least busy platform</h5>
-        <p>The station can grow to three tracks, each with its own unloading pit. On arrival a train picks the quietest track, and it will not move onto a platform that is already occupied.</p>
-      </div>
-    </div>
-
-    <h3>What the Ore Buys</h3>
-    <table>
-      <tr><th>Steam locomotive</th><td>Common, capacity 1. The first one is free. Each extra one costs 3 coal.</td></tr>
-      <tr><th>Diesel locomotive</th><td>Uncommon, capacity 2. Costs 4 coal.</td></tr>
-      <tr><th>Ore train</th><td>Rare, capacity 3. Costs 3 coal and 3 iron ore.</td></tr>
-      <tr><th>Heavy freight locomotive</th><td>Epic, capacity 4. Costs 4 coal and 6 iron ore.</td></tr>
-      <tr><th>Gold train</th><td>Legendary, capacity 5. Costs 4 gold ore and 2 iron ore.</td></tr>
-      <tr><th>Iron line</th><td>4 coal. The short coal line stays.</td></tr>
-      <tr><th>Gold line</th><td>4 coal and 4 iron ore.</td></tr>
-      <tr><th>Smelter</th><td>6 coal and 3 iron ore. Casts steel (2 coal + 1 iron ore) and gold bars (2 coal + 1 gold ore).</td></tr>
-      <tr><th>Station</th><td>A goods shed (2 steel) and a fast ramp (2 steel + 1 gold bar) shorten the unload wait. Two extra tracks can be added.</td></tr>
-    </table>
-
-    <h3>Browser Architecture</h3>
-    <table>
-      <tr><th>Rendering</th><td>Three.js. Locomotives, wagons, mines, the station, and the smelter are built from meshes in code.</td></tr>
-      <tr><th>App shell</th><td>Vite. The interface, the warehouse, the build menu, and the train list live in one HTML page.</td></tr>
-      <tr><th>Simulation</th><td>A fixed-step loop moves every train, resolves yields, and applies loading and unloading at stops.</td></tr>
-      <tr><th>Camera</th><td>Orbit with the mouse, zoom with the scroll wheel, scrub along the track, or follow any train.</td></tr>
-      <tr><th>Saving</th><td>Progress is written automatically to <code>localStorage</code> under the key <code>deine-strecke-v1</code>.</td></tr>
-    </table>
-
-    <div class="callout">
-      <h4>Play it locally</h4>
-      <p>Clone <a href="https://github.com/cortenburg28-arch/deine-strecke">deine-strecke</a>, then run <code>npm install</code> and <code>npm run dev</code>. The in-game interface is in German. Drag to look around, scroll to zoom, A/D or the arrow keys to move along the track, F to follow a train, and B to build the next project you can afford.</p>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    <p>Projects documentation prepared for review. The three systems cover local video automation, web reverse-engineering with ethical security analysis, and a browser railway simulation.</p>
-  </div>
+  <div class="wrap">Projects · local video, a school game, and a browser railway.</div>
 </footer>
 
+<script>
+const progress = document.getElementById("progress");
+const train = document.getElementById("train");
+const route = document.getElementById("route-path");
+const scrub = document.getElementById("strecke");
+const kicker = document.getElementById("beat-kicker");
+const title = document.getElementById("beat-title");
+const copy = document.getElementById("beat-copy");
+const length = route.getTotalLength();
+
+const beats = [
+  { at: 0, k: "Coal", t: "The first line", d: "One short line and a steam locomotive. Coal comes back to the station." },
+  { at: 0.28, k: "Iron", t: "Four coal", d: "That coal buys the iron line. The short coal line stays." },
+  { at: 0.55, k: "Gold", t: "The far mine", d: "Coal and iron ore buy a line out to the gold mine." },
+  { at: 0.78, k: "Yard", t: "Shared rails", d: "Trains keep their distance, yield at switches, and pick the quietest platform." }
+];
+
+const costs = [
+  ["Steam", [["c", 3]], "extra"],
+  ["Diesel", [["c", 4]], ""],
+  ["Ore train", [["c", 3], ["i", 3]], ""],
+  ["Heavy", [["c", 4], ["i", 6]], ""],
+  ["Gold train", [["g", 4], ["i", 2]], ""]
+];
+const costList = document.getElementById("costs");
+for (const [name, pips, note] of costs) {
+  const row = document.createElement("div");
+  row.className = "cost";
+  const dots = pips.map(([kind, n]) => `<i class="pip ${kind === "i" ? "iron" : kind === "g" ? "gold" : ""}"></i>`.repeat(n)).join("");
+  row.innerHTML = `<span>${name}${note ? " · " + note : ""}</span><span class="pips">${dots}</span>`;
+  costList.appendChild(row);
+}
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("in");
+  });
+}, { threshold: 0.22 });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+function placeTrain(p) {
+  const point = route.getPointAtLength(Math.max(0, Math.min(1, p)) * length);
+  const ahead = route.getPointAtLength(Math.min(length, Math.max(0, p) * length + 8));
+  const angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * 180 / Math.PI;
+  train.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`);
+}
+
+function onScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  const rect = scrub.getBoundingClientRect();
+  const total = scrub.offsetHeight - innerHeight;
+  const passed = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+  const p = total > 0 ? passed / total : 1;
+  const pinned = getComputedStyle(document.querySelector(".scrub-pin")).position === "sticky";
+  if (!pinned) {
+    placeTrain(0.62);
+    return;
+  }
+  placeTrain(reduce ? 0.72 : p);
+  if (reduce) return;
+  const beat = [...beats].reverse().find((item) => p >= item.at) || beats[0];
+  if (kicker.textContent !== beat.k) {
+    kicker.textContent = beat.k;
+    title.textContent = beat.t;
+    copy.textContent = beat.d;
+  }
+}
+
+placeTrain(0);
+onScroll();
+addEventListener("scroll", onScroll, { passive: true });
+addEventListener("resize", onScroll);
+</script>
 </body>
 </html>
