@@ -336,29 +336,59 @@
   #beat-copy, #vid-copy { color: var(--muted); font-size: 18px; margin: 0; max-width: 420px; }
   .beat.video { color: var(--accent); }
   .video-scrub { height: 300vh; }
-  .phone-wrap { display: grid; justify-items: center; gap: 14px; }
+  #make-video .scrub-pin {
+    grid-template-columns: minmax(220px, 1fr) auto;
+    align-items: center;
+  }
+  .phone-wrap { display: grid; justify-items: center; }
   .film-steps { margin-top: 22px; width: 100%; }
   .phone {
+    position: relative;
     width: auto;
-    height: min(440px, 52vh);
+    height: min(760px, calc(100vh - 88px));
     aspect-ratio: 9 / 16;
-    background: #1d1d1f;
-    border-radius: 32px;
-    padding: 12px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+    background: #0b0b0d;
+    border-radius: 48px;
+    padding: 8px;
+    box-shadow:
+      0 28px 70px rgba(0,0,0,0.18),
+      inset 0 0 0 1px #3a3a3c;
   }
+  .phone::before,
+  .phone::after {
+    content: "";
+    position: absolute;
+    left: -3px;
+    width: 3px;
+    background: #2c2c2e;
+    border-radius: 2px 0 0 2px;
+  }
+  .phone::before { top: 118px; height: 28px; }
+  .phone::after { top: 160px; height: 54px; }
   .screen {
     position: relative;
     height: 100%;
-    border-radius: 22px;
+    border-radius: 40px;
     overflow: hidden;
-    background: #2c2c2e;
+    background: #111;
     color: white;
+  }
+  .island {
+    position: absolute;
+    z-index: 8;
+    top: 12px;
+    left: 50%;
+    width: 118px;
+    height: 34px;
+    margin-left: -59px;
+    background: #000;
+    border-radius: 20px;
+    pointer-events: none;
   }
   .layer {
     position: absolute;
     inset: 0;
-    padding: 22px 18px;
+    padding: 58px 22px 22px;
     opacity: 0;
     transition: opacity 0.35s ease;
   }
@@ -383,7 +413,7 @@
   .gameplay span {
     position: absolute;
     left: 16px;
-    top: 16px;
+    top: 56px;
     font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -496,8 +526,13 @@
     .hero-grid, .stats, .split, .charts, .scrub-pin {
       grid-template-columns: 1fr;
     }
+    #make-video .scrub-pin { grid-template-columns: minmax(0, 1fr) auto; }
     .hero { min-height: auto; padding-top: 48px; }
     .scrub, .video-scrub { height: 210vh; }
+  }
+  @media (max-width: 640px) {
+    #make-video .scrub-pin { grid-template-columns: 1fr; }
+    .phone { height: min(560px, 68vh); }
   }
   @media (max-height: 620px) {
     .scrub { height: auto; }
@@ -601,6 +636,7 @@
     <div class="phone-wrap">
       <div class="phone" aria-label="A vertical video being assembled">
         <div class="screen">
+          <div class="island" aria-hidden="true"></div>
           <div class="layer gameplay" id="layer-game"><span>Gameplay, cropped to 9:16</span></div>
           <div class="layer hook-card on" id="layer-hook">
             <p class="kicker-label">Hook</p>
