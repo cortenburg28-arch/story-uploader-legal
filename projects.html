@@ -328,12 +328,106 @@
     color: var(--gold);
     margin: 0 0 8px;
   }
-  #beat-title {
+  #beat-title, #vid-title {
     font-size: 48px;
     letter-spacing: -0.03em;
     margin: 0 0 12px;
   }
-  #beat-copy { color: var(--muted); font-size: 18px; margin: 0; max-width: 420px; }
+  #beat-copy, #vid-copy { color: var(--muted); font-size: 18px; margin: 0; max-width: 420px; }
+  .beat.video { color: var(--accent); }
+  .video-scrub { height: 300vh; }
+  .phone-wrap { display: grid; justify-items: center; gap: 14px; }
+  .film-steps { margin-top: 22px; width: 100%; }
+  .phone {
+    width: auto;
+    height: min(440px, 52vh);
+    aspect-ratio: 9 / 16;
+    background: #1d1d1f;
+    border-radius: 32px;
+    padding: 12px;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+  }
+  .screen {
+    position: relative;
+    height: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #2c2c2e;
+    color: white;
+  }
+  .layer {
+    position: absolute;
+    inset: 0;
+    padding: 22px 18px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .layer.on { opacity: 1; }
+  .hook-card, .script-layer { background: #f5f5f7; color: #1d1d1f; }
+  .kicker-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+  .hook-card p, .script-layer .hook { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+  .script-layer .line { margin: 12px 0 0; font-size: 14px; color: #6e6e73; opacity: 0.25; transition: opacity 0.25s ease; }
+  .script-layer .line.show { opacity: 1; color: #1d1d1f; }
+  .gameplay {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.45)),
+      repeating-linear-gradient(90deg, #3d7a4a 0 18px, #4e8d58 18px 36px);
+  }
+  .gameplay span {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+  }
+  .wave { display: flex; align-items: flex-end; gap: 4px; background: #111; }
+  .wave i {
+    flex: 1;
+    height: var(--h);
+    background: #5ac8fa;
+    border-radius: 3px 3px 0 0;
+    transform-origin: bottom;
+    transform: scaleY(0.15);
+  }
+  .wave i { transition: transform 0.2s linear; }
+  .playhead {
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    width: 2px;
+    background: white;
+    left: 8%;
+  }
+  .caps { display: flex; align-items: flex-end; justify-content: center; background: transparent; pointer-events: none; }
+  .caps p { margin: 0 0 28px; text-align: center; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,0.45); }
+  .caps span { opacity: 0.45; }
+  .caps span.on { opacity: 1; color: #ffe14a; }
+  .learn { background: rgba(0,0,0,0.55); display: flex; flex-direction: column; justify-content: flex-end; }
+  .learn svg { width: 100%; height: 90px; }
+  .learn path { fill: none; stroke: white; stroke-width: 3; stroke-linecap: round; }
+  .learn p { margin: 8px 0 6px; font-size: 14px; font-weight: 600; }
+  .film-steps {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    width: min(420px, 100%);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .film-steps span { text-align: center; }
+  .film-steps span.on { color: var(--accent); }
   .route-card {
     background: white;
     border: 1px solid var(--line);
@@ -398,12 +492,12 @@
 
   @media (max-width: 860px) {
     h1 { font-size: 42px; }
-    h2, #beat-title { font-size: 34px; }
+    h2, #beat-title, #vid-title { font-size: 34px; }
     .hero-grid, .stats, .split, .charts, .scrub-pin {
       grid-template-columns: 1fr;
     }
     .hero { min-height: auto; padding-top: 48px; }
-    .scrub { height: 190vh; }
+    .scrub, .video-scrub { height: 210vh; }
   }
   @media (max-height: 620px) {
     .scrub { height: auto; }
@@ -484,27 +578,55 @@
     <h2 class="reveal d1">Automated TikToks</h2>
     <div class="prose reveal d2">
       <p>Faceless story videos are a script, a synthetic voice, word-by-word captions, and background footage. Doing that by hand means writing, recording, timing every word, cutting, then guessing why people left.</p>
-      <p>This program runs that whole job on my Mac. One command picks a story type and a hook, writes the script with a local model, speaks it, locks captions to the real audio, and exports a vertical video. After it is posted, the drop-off second goes back into the notes, and the next script is written against those rules.</p>
+      <p>This program runs that whole job on my Mac. Scroll through the phone: one example video is picked, written, spoken, captioned, cut, and then the drop-off is turned into a rule for the next one. Text, voice, alignment, and the cut all stay on the machine.</p>
     </div>
+  </div>
+</section>
 
-    <div class="panel reveal">
-      <h3 style="margin:0 0 16px">What one command does</h3>
-      <ol class="flow-list">
-        <li><b>1</b><div><strong>Pick the test</strong><p>A category, a hook shape, and a voice are chosen first and saved, so later videos can be compared.</p></div></li>
-        <li><b>2</b><div><strong>Write the script</strong><p>The local model pitches five ideas, keeps one, and writes 75–85 seconds of speech. Old titles and the rulebook are already in the prompt.</p></div></li>
-        <li><b>3</b><div><strong>Speak it</strong><p>Kokoro turns the script into a WAV file on this machine. If the take is too short, the script is extended and spoken again.</p></div></li>
-        <li><b>4</b><div><strong>Time every word</strong><p>faster-whisper hears the audio. Those times are snapped back onto the original spelling, so captions never drift into a misheard word.</p></div></li>
-        <li><b>5</b><div><strong>Cut the video</strong><p>FFmpeg crops gameplay to 1080×1920, burns in the captions, and mixes the voice.</p></div></li>
-        <li><b>6</b><div><strong>Read the drop-off</strong><p>Views, watch time, and the second people leave are written into a note. The model maps that second to the sentence being spoken and adds a rule for the next video.</p></div></li>
-      </ol>
-      <div class="chips">
-        <span class="chip">Python on macOS</span>
-        <span class="chip">Qwen 27B, local</span>
-        <span class="chip">Kokoro voice</span>
-        <span class="chip">faster-whisper</span>
-        <span class="chip">FFmpeg</span>
+<section class="scrub video-scrub" id="make-video">
+  <div class="scrub-pin">
+    <div>
+      <p class="beat video" id="vid-kicker">01 · Idea</p>
+      <h2 id="vid-title">Pick the test</h2>
+      <p id="vid-copy">Before anything is written, the program picks a category, a hook, and a voice. Those three are saved so later videos can be compared.</p>
+      <div class="film-steps" id="film-steps">
+        <span>Idea</span>
+        <span>Script</span>
+        <span>Voice</span>
+        <span>Captions</span>
+        <span>Edit</span>
+        <span>Learn</span>
       </div>
-      <p class="caption">The chips are the stack. Nothing in the list calls a paid API. Text, voice, alignment, and the cut all stay on the Mac.</p>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone" aria-label="A vertical video being assembled">
+        <div class="screen">
+          <div class="layer gameplay" id="layer-game"><span>Gameplay, cropped to 9:16</span></div>
+          <div class="layer hook-card on" id="layer-hook">
+            <p class="kicker-label">Hook</p>
+            <p>I never told anyone this.</p>
+          </div>
+          <div class="layer script-layer" id="layer-script">
+            <p class="kicker-label">Script · 75–85s</p>
+            <p class="hook">I never told anyone this.</p>
+            <p class="line" data-line>Five pitches. One is kept.</p>
+            <p class="line" data-line>The slow middle gets cut.</p>
+            <p class="line" data-line>The rulebook from older videos is already in the prompt.</p>
+          </div>
+          <div class="layer wave" id="layer-wave">
+            <div class="playhead" id="playhead"></div>
+          </div>
+          <div class="layer caps" id="layer-caps">
+            <p id="cap-line"></p>
+          </div>
+          <div class="layer learn" id="layer-learn">
+            <svg viewBox="0 0 200 80" aria-hidden="true">
+              <path id="retain-path" pathLength="1" d="M8 18 C 50 18, 70 24, 100 36 S 150 68, 192 72"/>
+            </svg>
+            <p id="learn-note">People left on this sentence.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -630,10 +752,28 @@ const progress = document.getElementById("progress");
 const train = document.getElementById("train");
 const route = document.getElementById("route-path");
 const scrub = document.getElementById("strecke");
+const videoScrub = document.getElementById("make-video");
 const kicker = document.getElementById("beat-kicker");
 const title = document.getElementById("beat-title");
 const copy = document.getElementById("beat-copy");
+const vidKicker = document.getElementById("vid-kicker");
+const vidTitle = document.getElementById("vid-title");
+const vidCopy = document.getElementById("vid-copy");
 const length = route.getTotalLength();
+const retain = document.getElementById("retain-path");
+const playhead = document.getElementById("playhead");
+const capLine = document.getElementById("cap-line");
+const filmSteps = [...document.querySelectorAll("#film-steps span")];
+const scriptLines = [...document.querySelectorAll("[data-line]")];
+const words = ["I", "never", "told", "anyone", "this."];
+capLine.innerHTML = words.map((word) => `<span>${word}</span>`).join(" ");
+const wave = document.getElementById("layer-wave");
+[40, 70, 50, 90, 65, 100, 55, 80, 45, 95, 60, 85, 50, 75].forEach((h) => {
+  const bar = document.createElement("i");
+  bar.style.setProperty("--h", `${h}%`);
+  wave.insertBefore(bar, playhead);
+});
+const bars = [...wave.querySelectorAll("i")];
 
 const beats = [
   { at: 0, k: "Coal mine", t: "Where you start", d: "The map opens with this short line and one steam locomotive. It loads one unit of coal and brings it back to the station." },
@@ -666,6 +806,15 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.22 });
 document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
+const videoBeats = [
+  { at: 0, k: "01 · Idea", t: "Pick the test", d: "Before anything is written, the program picks a category, a hook, and a voice. Those three are saved so later videos can be compared." },
+  { at: 0.16, k: "02 · Script", t: "Write the script", d: "A local model pitches five ideas and keeps one. The script is 75–85 seconds of speech, and the rules from older videos are already in the prompt." },
+  { at: 0.33, k: "03 · Voice", t: "Speak it", d: "Kokoro reads the script into a WAV file on this Mac. If the take is too short, the script is extended and spoken again." },
+  { at: 0.5, k: "04 · Captions", t: "Time every word", d: "faster-whisper hears the audio. Those times are locked onto the original spelling, so a misheard word never appears on screen." },
+  { at: 0.66, k: "05 · Edit", t: "Cut the frame", d: "FFmpeg crops gameplay to 1080×1920, burns the captions onto the picture, and mixes the voice. This is the file you could post." },
+  { at: 0.83, k: "06 · Learn", t: "Read the drop-off", d: "After it is posted, the second people leave is mapped to the sentence spoken then. That finding becomes a rule for the next script." }
+];
+
 function placeTrain(p) {
   const point = route.getPointAtLength(Math.max(0, Math.min(1, p)) * length);
   const ahead = route.getPointAtLength(Math.min(length, Math.max(0, p) * length + 8));
@@ -673,26 +822,74 @@ function placeTrain(p) {
   train.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`);
 }
 
+function scrubProgress(section) {
+  const pin = section.querySelector(".scrub-pin");
+  const sticky = getComputedStyle(pin).position === "sticky";
+  const rect = section.getBoundingClientRect();
+  const total = section.offsetHeight - innerHeight;
+  const passed = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+  return { sticky, p: total > 0 ? passed / total : 1 };
+}
+
+function showLayer(id, on) {
+  document.getElementById(id).classList.toggle("on", on);
+}
+
+function renderVideo(p) {
+  const beat = [...videoBeats].reverse().find((item) => p >= item.at) || videoBeats[0];
+  if (vidKicker.textContent !== beat.k) {
+    vidKicker.textContent = beat.k;
+    vidTitle.textContent = beat.t;
+    vidCopy.textContent = beat.d;
+  }
+  const step = videoBeats.findIndex((item) => item === beat);
+  filmSteps.forEach((label, index) => label.classList.toggle("on", index <= step));
+
+  showLayer("layer-hook", p < 0.16);
+  showLayer("layer-script", p >= 0.16 && p < 0.33);
+  showLayer("layer-wave", p >= 0.33 && p < 0.5);
+  showLayer("layer-game", p >= 0.66);
+  showLayer("layer-caps", p >= 0.5 && p < 0.83);
+  showLayer("layer-learn", p >= 0.83);
+
+  const scriptP = Math.min(1, Math.max(0, (p - 0.16) / 0.17));
+  scriptLines.forEach((line, index) => line.classList.toggle("show", scriptP > (index + 0.2) / scriptLines.length));
+
+  const voiceP = Math.min(1, Math.max(0, (p - 0.33) / 0.17));
+  bars.forEach((bar, index) => {
+    const grown = Math.min(1, Math.max(0, voiceP * bars.length - index));
+    bar.style.transform = `scaleY(${0.12 + 0.88 * grown})`;
+  });
+  playhead.style.left = `${8 + voiceP * 78}%`;
+
+  const capP = Math.min(1, Math.max(0, (p - 0.5) / 0.16));
+  const active = Math.min(words.length - 1, Math.floor(capP * words.length));
+  [...capLine.children].forEach((span, index) => span.classList.toggle("on", index <= active));
+
+  const learnP = Math.min(1, Math.max(0, (p - 0.83) / 0.17));
+  retain.style.strokeDasharray = "1";
+  retain.style.strokeDashoffset = String(1 - learnP);
+}
+
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
-  const rect = scrub.getBoundingClientRect();
-  const total = scrub.offsetHeight - innerHeight;
-  const passed = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
-  const p = total > 0 ? passed / total : 1;
-  const pinned = getComputedStyle(document.querySelector(".scrub-pin")).position === "sticky";
-  if (!pinned) {
-    placeTrain(0.62);
-    return;
+
+  const trainState = scrubProgress(scrub);
+  const trainP = !trainState.sticky ? 0.62 : reduce ? 0.72 : trainState.p;
+  placeTrain(trainP);
+  if (trainState.sticky && !reduce) {
+    const beat = [...beats].reverse().find((item) => trainP >= item.at) || beats[0];
+    if (kicker.textContent !== beat.k) {
+      kicker.textContent = beat.k;
+      title.textContent = beat.t;
+      copy.textContent = beat.d;
+    }
   }
-  placeTrain(reduce ? 0.72 : p);
-  if (reduce) return;
-  const beat = [...beats].reverse().find((item) => p >= item.at) || beats[0];
-  if (kicker.textContent !== beat.k) {
-    kicker.textContent = beat.k;
-    title.textContent = beat.t;
-    copy.textContent = beat.d;
-  }
+
+  const videoState = scrubProgress(videoScrub);
+  const videoP = !videoState.sticky ? 0.7 : reduce ? 0.92 : videoState.p;
+  renderVideo(videoP);
 }
 
 placeTrain(0);
